@@ -27,41 +27,18 @@ class Vector(object):
             self._storage[key] = value
 
     def __add__(self, other):
-        if type(other) == Vector:
-            self._check_vector_len(other)
-            return Vector(map(lambda x, y: x + y,
-                              self._storage,
-                              other._storage))
-
-        elif isinstance(other, numbers.Number):
-            return Vector(map(lambda x: x + other, self._storage))
-        else:
+        if type(other) != Vector:
             return NotImplemented
 
-    def __radd__(self, other):
-        return self + other
+        self._check_vector_len(other)
+        return Vector(map(lambda x, y: x + y, self._storage, other._storage))
 
     def __sub__(self, other):
-        if type(other) == Vector:
-            self._check_vector_len(other)
-            return Vector(map(lambda x, y: x - y,
-                              self._storage,
-                              other._storage))
-        elif isinstance(other, numbers.Number):
-            return Vector(map(lambda x: x - other, self._storage))
-        else:
+        if type(other) != Vector:
             return NotImplemented
 
-    def __rsub__(self, other):
-        if type(other) == Vector:
-            self._check_vector_len(other)
-            return Vector(map(lambda x, y: x - y,
-                              other._storage,
-                              self._storage))
-        elif isinstance(other, numbers.Number):
-            return Vector(map(lambda x: other - x, self._storage))
-        else:
-            return NotImplemented
+        self._check_vector_len(other)
+        return Vector(map(lambda x, y: x - y, self._storage, other._storage))
 
     def __mul__(self, other):
         if type(other) == Vector:
@@ -76,9 +53,9 @@ class Vector(object):
         return self * other
 
     def __truediv__(self, other):
-        if isinstance(other, numbers.Number):
-            return Vector(map(lambda x: x / other, self._storage))
-        return NotImplemented
+        if not isinstance(other, numbers.Number):
+            return NotImplemented
+        return Vector(map(lambda x: x / other, self._storage))
 
     def _check_vector_len(self, other):
         if len(other) != len(self):
