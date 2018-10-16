@@ -28,8 +28,7 @@ class Vector(object):
 
     def __add__(self, other):
         if type(other) == Vector:
-            if len(other) != len(self):
-                raise ValueError("sum operands aren't length equal")
+            self._check_vector_len(other)
             return Vector(map(lambda x, y: x + y,
                               self._storage,
                               other._storage))
@@ -41,6 +40,32 @@ class Vector(object):
 
     def __radd__(self, other):
         return self + other
+
+    def __sub__(self, other):
+        if type(other) == Vector:
+            self._check_vector_len(other)
+            return Vector(map(lambda x, y: x - y,
+                              self._storage,
+                              other._storage))
+        elif isinstance(other, numbers.Number):
+            return Vector(map(lambda x: x - other, self._storage))
+        else:
+            return NotImplemented
+
+    def __rsub__(self, other):
+        if type(other) == Vector:
+            self._check_vector_len(other)
+            return Vector(map(lambda x, y: x - y,
+                              other._storage,
+                              self._storage))
+        elif isinstance(other, numbers.Number):
+            return Vector(map(lambda x: other - x, self._storage))
+        else:
+            return NotImplemented
+
+    def _check_vector_len(self, other):
+        if len(other) != len(self):
+            raise ValueError("operand Vectors aren't length equal")
 
     def matrix_mult(self, matrix):
         pass
