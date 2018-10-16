@@ -67,7 +67,7 @@ class Vector(object):
         if type(other) == Vector:
             self._check_vector_len(other)
             return sum(map(lambda x, y: x * y, self._storage, other._storage))
-        elif isinstance(other, numbers.Number)
+        elif isinstance(other, numbers.Number):
             return Vector(map(lambda x: x * other, self._storage))
         else:
             return NotImplemented
@@ -83,6 +83,17 @@ class Vector(object):
     def _check_vector_len(self, other):
         if len(other) != len(self):
             raise ValueError("operand Vectors aren't length equal")
+
+    def push_back(self, value):
+        self._storage.append(value)
+
+    def pop_back(self):
+        value = self._storage[-1]
+        del self._storage[-1]
+        return value
+
+    def insert(self, pos, value):
+        self._storage.insert(pos, value)
 
     def matrix_mult(self, matrix):
         pass
