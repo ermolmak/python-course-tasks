@@ -63,6 +63,18 @@ class Vector(object):
         else:
             return NotImplemented
 
+    def __mul__(self, other):
+        if type(other) == Vector:
+            self._check_vector_len(other)
+            return sum(map(lambda x, y: x * y, self._storage, other._storage))
+        elif isinstance(other, numbers.Number)
+            return Vector(map(lambda x: x * other, self._storage))
+        else:
+            return NotImplemented
+
+    def __rmul__(self, other):
+        return self * other
+
     def _check_vector_len(self, other):
         if len(other) != len(self):
             raise ValueError("operand Vectors aren't length equal")
