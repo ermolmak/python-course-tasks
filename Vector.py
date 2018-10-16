@@ -1,4 +1,3 @@
-import math
 import numbers
 
 
@@ -73,4 +72,17 @@ class Vector(object):
         self._storage.insert(pos, value)
 
     def matrix_mult(self, matrix):
-        pass
+        if type(matrix) != list or any(map(lambda x: type(x) != list, matrix)):
+            raise TypeError('Matrix must be a list of lists')
+        new_len = len(matrix[0])
+        if len(matrix) != len(self):
+            raise ValueError('Matrix height and vector length must be equal')
+        if any(map(lambda x: len(x) != new_len, matrix)):
+            raise ValueError('All rows in matrix must have the same length')
+
+        res = Vector()
+        for i in range(new_len):
+            res.push_back(sum(map(lambda x, y: x * matrix[y][i],
+                                  self._storage,
+                                  range(len(self)))))
+        return res
