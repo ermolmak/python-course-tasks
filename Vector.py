@@ -25,6 +25,12 @@ class Vector(object):
         else:
             self._storage[key] = value
 
+    def __repr__(self):
+        return f'Vector({", ".join(map(repr, self._storage))})'
+
+    def __str__(self):
+        return f'Vector({", ".join(map(str, self._storage))})'
+
     def __add__(self, other):
         if type(other) != Vector:
             return NotImplemented
