@@ -92,3 +92,22 @@ class Vector(object):
                                   self._storage,
                                   range(len(self)))))
         return res
+
+
+if __name__ == '__main__':
+    a = Vector(1, 1.5, -5)
+    b = Vector(-4, 0, 3.14)
+    c = Vector(1, 2)
+
+    print(a + b)
+    # print(a + c)
+
+    print(a - b)
+
+    print(a * b)
+    print(a * 2)
+    print(2 * a)
+
+    print(a / 2)
+    print(len(a), len(b), len(c))
+    print(a.matrix_mult([[1, 4, 7], [2, 5, 8], [3, 6, 9]]))
