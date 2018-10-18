@@ -108,7 +108,7 @@ class Table:
     def unique(self):
         res = set()
         for col in self._columns:
-            res += col.unique()
+            res |= col.unique()
         return res
 
     def count(self):
