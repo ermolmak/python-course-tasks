@@ -35,7 +35,7 @@ class Table:
         if type(table) != list or any(map(lambda x: type(x) != list, table)):
             raise TypeError('initializer must be a list of lists')
 
-        col_num = max(map(len, table))
+        col_num = max(map(len, table), default=0)
         self._columns = []
         for i in range(col_num):
             self._columns.append(Table._Column(Table._col_iter(table, i)))
@@ -59,3 +59,19 @@ class Table:
             return self._columns[self._names[item]]
         elif type(item) == int:
             return self._columns[item]
+
+    def head(self, count):
+        res = Table([])
+
+        for col in self._columns:
+            res._columns.append(Table._Column(col[:count], name=col.name))
+
+        res._names = self._names
+
+    def tail(self, count):
+        res = Table([])
+
+        for col in self._columns:
+            res._columns.append(Table._Column(col[-count:], name=col.name))
+
+        res._names = self._names
