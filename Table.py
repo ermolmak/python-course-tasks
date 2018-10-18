@@ -29,6 +29,9 @@ class Table:
         def count(self):
             return len(self.unique())
 
+        def __str__(self):
+            return str(self._storage)
+
     @staticmethod
     def _col_iter(table, col):
         for i in range(len(table)):
@@ -108,3 +111,13 @@ class Table:
 
     def count(self):
         return len(self.unique())
+
+    def __str__(self):
+        res = []
+        for i in range(len(self)):
+            out = [f'Column #{i} ', ': ', str(self._columns[i])]
+            name = self._columns[i].name
+            if name is not None:
+                out.insert(1, f'({name})')
+            res.append(''.join(out))
+        return '\n'.join(res)
