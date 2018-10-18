@@ -79,6 +79,7 @@ class Table:
             res._columns.append(Table._Column(col[:count], name=col.name))
 
         res._names = self._names
+        return res
 
     def tail(self, count):
         res = Table([])
@@ -87,6 +88,7 @@ class Table:
             res._columns.append(Table._Column(col[-count:], name=col.name))
 
         res._names = self._names
+        return res
 
     @staticmethod
     def read(file, titles=False, sep=','):
@@ -121,3 +123,21 @@ class Table:
                 out.insert(1, f'({name})')
             res.append(''.join(out))
         return '\n'.join(res)
+
+
+if __name__ == '__main__':
+    t = Table([[1, 'one', 'один'], [2, 'two'], [3, 'three', 'три']])
+    print(t)
+
+    t.set_name(0, 'int')
+    print(t)
+
+    t.set_name(2, 'rus')
+    print(t)
+
+    t['rus'][1] = 'два'
+    print(t)
+
+    print(t.head(2))
+
+    print(t.tail(1))
