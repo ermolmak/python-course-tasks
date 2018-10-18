@@ -23,6 +23,12 @@ class Table:
         def __setitem__(self, key, value):
             self._storage[key] = value
 
+        def unique(self):
+            return set(self._storage)
+
+        def count(self):
+            return len(self.unique())
+
     @staticmethod
     def _col_iter(table, col):
         for i in range(len(table)):
@@ -93,3 +99,12 @@ class Table:
         if titles:
             for i in range(min(len(res), len(names))):
                 res.set_name(i, names[i])
+
+    def unique(self):
+        res = set()
+        for col in self._columns:
+            res += col.unique()
+        return res
+
+    def count(self):
+        return len(self.unique())
