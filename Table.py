@@ -42,6 +42,9 @@ class Table:
 
         self._names = {}
 
+    def __len__(self):
+        return len(self._columns)
+
     def set_name(self, index, name):
         if name in self._names:
             raise ValueError(f'"{name}" column already exists')
@@ -75,3 +78,18 @@ class Table:
             res._columns.append(Table._Column(col[-count:], name=col.name))
 
         res._names = self._names
+
+    @staticmethod
+    def read(file, titles=False, sep=','):
+        names = []
+        if titles:
+            names = file.readline().split(sep)
+        data = []
+        for line in file:
+            data.append(line.split(sep))
+
+        res = Table(data)
+
+        if titles:
+            for i in range(min(len(res), len(names))):
+                res.set_name(i, names[i])
