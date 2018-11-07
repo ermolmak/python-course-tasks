@@ -36,3 +36,13 @@ class Storage:
 
     def edit(self):
         return _ContextManager(self._storage)
+
+    def __repr__(self):
+        return f'Storage({repr(self._storage)})'
+
+    def __str__(self):
+        return f'Storage({str(self._storage)})'
+
+
+if __name__ == '__main__':
+    pass
