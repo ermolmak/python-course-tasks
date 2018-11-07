@@ -45,4 +45,25 @@ class Storage:
 
 
 if __name__ == '__main__':
-    pass
+    s = Storage(one=1, two=2)
+    print(s)
+    print(s['two'])
+    # s['three'] = 3
+
+    with s.edit() as se:
+        se['three'] = 3
+        print(se['three'])
+        se['two'] = 'два'
+        print(se['two'])
+        print(s['two'])
+    print(s['two'])
+    print(s)
+
+    try:
+        with s.edit() as se:
+            se['four'] = 4
+            print(se['four'])
+            raise KeyboardInterrupt()
+    except KeyboardInterrupt:
+        pass
+    print(s)
