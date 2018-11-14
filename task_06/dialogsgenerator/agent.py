@@ -13,7 +13,7 @@ class Agent(Generator):
         return self  # TODO
 
     def __next__(self):
-        return self._texts[randrange(self._texts.size)]  # TODO
+        return f'{self._name}: {self._texts[randrange(self._texts.size)]}'  # TODO
 
     def send(self, msg):
         # Необходимо написать свой собственный метод send для генератора
