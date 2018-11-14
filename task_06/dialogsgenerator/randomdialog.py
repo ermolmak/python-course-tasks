@@ -92,7 +92,7 @@ class RandomDialog(object):
         """
         if dialog is None:
             dialog = self.generate()
-        pass  # TODO
+        return list(dialog)
 
     def write(self, dialog=None, target=sys.stdout):
         """
