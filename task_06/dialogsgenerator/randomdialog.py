@@ -15,7 +15,32 @@ class RandomDialog(object):
         При генерации вызывает функцию turn.
         Возвращаемый объект является генератором.
         """
-        pass  # TODO
+        chains_number = random.randrange(self._max_len) + 1
+        turn = self.turn
+
+        class DialogGenerator(Generator):
+            def __init__(self):
+                self._index = -1
+
+            def __next__(self):
+                self._index += 1
+                if self._index == len(chains_number):
+                    raise StopIteration()
+                return list(turn())
+
+            def __iter__(self):
+                return self
+
+            def send(self, value):
+                return next(self)
+
+            def throw(self, typ=None, val=None, tb=None):
+                super().throw(typ, val, tb)
+
+            def close(self):
+                pass
+
+        return DialogGenerator()
 
     def turn(self):
         """
