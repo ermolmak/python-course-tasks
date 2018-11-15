@@ -1,6 +1,7 @@
 from dialogsgenerator import Agent
 from dialogsgenerator import RandomDialog
 
+import argparse
 import sys
 
 
@@ -22,4 +23,11 @@ def write(dialogs, target=sys.stdout):
 
 
 if __name__ == "__main__":
-    pass
+    parser = argparse.ArgumentParser()
+    parser.add_argument('count_dialogs', type=int,
+                        help='Amount of dialogs to generate')
+    parser.add_argument('max_dialog_len', type=int,
+                        help='Maximum amount of turns in each dialog')
+    parser.add_argument('-c', '--clinton_kb', help="Clinton's texts")
+    parser.add_argument('-t', '--trump_kb', help="Trump's texts")
+    args = parser.parse_args()
