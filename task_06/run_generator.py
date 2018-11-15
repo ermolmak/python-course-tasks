@@ -31,3 +31,15 @@ if __name__ == "__main__":
     parser.add_argument('-c', '--clinton_kb', help="Clinton's texts")
     parser.add_argument('-t', '--trump_kb', help="Trump's texts")
     args = parser.parse_args()
+
+    clinton_filename = args.clinton_kb
+    if clinton_filename is None:
+        clinton_filename = 'clinton.csv'
+    trump_filename = args.trump_kb
+    if trump_filename is None:
+        trump_filename = 'trump.csv'
+
+    if args.count_dialogs <= 0:
+        raise ValueError("'count_dialogs' must be positive")
+    if args.max_dialog_len <= 0:
+        raise ValueError("'max_dialog_len' must be positive")
