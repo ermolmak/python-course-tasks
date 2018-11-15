@@ -48,12 +48,16 @@ class RandomDialog(object):
             dialog = self.generate()
         return list(dialog)
 
+    @staticmethod
+    def write_dialog(dialog, target):
+        print(*map(lambda turn: f'turn {turn[0]}:\n' + '\n'.join(
+            map(lambda s: '\t' + s, turn[1])), enumerate(dialog)), sep='\n',
+              file=target)
+
     def write(self, dialog=None, target=sys.stdout):
         """
         Записывает результат self.eval() в соответствующий поток.
         """
         if dialog is None:
             dialog = self.eval()
-        print(*map(lambda turn: f'turn {turn[0]}:\n' + '\n'.join(
-            map(lambda s: '\t' + s, turn[1])), enumerate(dialog)), sep='\n',
-              file=target)
+        self.write_dialog(dialog, target)
