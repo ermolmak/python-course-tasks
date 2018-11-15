@@ -57,32 +57,9 @@ class RandomDialog(object):
         speaker = self._agents[speaker_num]
         other_agents = self._agents[:speaker_num] + \
                        self._agents[speaker_num + 1:]
-
-        class TurnGenerator(Generator):
-            def __init__(self):
-                self._index = -2
-
-            def __next__(self):
-                self._index += 1
-                if self._index == -1:
-                    return next(speaker)
-                if self._index == len(other_agents):
-                    raise StopIteration()
-                return next(other_agents[self._index])
-
-            def __iter__(self):
-                return self
-
-            def send(self, value):
-                return next(self)
-
-            def throw(self, typ=None, val=None, tb=None):
-                super().throw(typ, val, tb)
-
-            def close(self):
-                pass
-
-        return TurnGenerator()
+        random.shuffle(other_agents)
+        yield next(speaker)
+        yield from map(next, other_agents)
 
     def eval(self, dialog=None):
         """
