@@ -52,6 +52,6 @@ class RandomDialog(object):
         """
         if dialog is None:
             dialog = self.eval()
-        pass  # TODO
-
-    pass
+        print(*map(lambda turn: f'turn {turn[0]}:\n' + '\n'.join(
+            map(lambda s: '\t' + s, turn[1])), enumerate(dialog)), sep='\n',
+              file=target)
