@@ -33,8 +33,10 @@ class RandomDialog(object):
         other_agents = self._agents[:speaker_num] + \
                        self._agents[speaker_num + 1:]
         random.shuffle(other_agents)
-        yield next(speaker)
-        yield from map(next, other_agents)
+
+        msg = next(speaker)
+        yield msg
+        yield from map(lambda agent: agent.send(msg), other_agents)
 
     def eval(self, dialog=None):
         """
