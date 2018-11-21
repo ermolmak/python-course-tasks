@@ -7,7 +7,8 @@ class PropertyCreator(type):
         for key, value in attrs.items():
             if len(key) > 4 and key.startswith(('get_', 'set_', 'del_')):
                 current_name = key[4:]
-                properties[current_name] = storage()
+                if current_name not in properties:
+                    properties[current_name] = storage()
                 if key.startswith('get_'):
                     properties[current_name].getter = value
                 elif key.startswith('set_'):
