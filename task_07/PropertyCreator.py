@@ -1,11 +1,5 @@
-from typing import Dict, Any, Tuple
-
-
 class PropertyCreator(type):
-    def __init__(cls, name: str, bases: Tuple[type, ...],
-                 attrs: Dict[str, Any]):
-        new_cls = super().__init__(cls, name, bases, attrs)
-
+    def __new__(mcs, name, bases, attrs):
         properties = {}
 
         storage = type('storage', (), {'__getattr__': lambda self, attr: None})
@@ -21,6 +15,6 @@ class PropertyCreator(type):
                 elif key.startswith('del_'):
                     properties[current_name].deleter = value
 
-        for key, value in properties.items():
-            new_cls.__dict__[key] = property(value.getter, value.setter,
-                                             value.deleter)
+        new_attrs = {key: property(value.getter, value.setter, value.deleter)
+                     for key, value in properties.items()}
+        return type.__new__(mcs, name, bases, dict(**attrs, **new_attrs))
