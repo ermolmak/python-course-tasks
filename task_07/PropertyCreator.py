@@ -71,7 +71,15 @@ if __name__ == '__main__':
             def set_x(self, value):
                 self._secret_list.append("set")
 
-        pass  # TODO
+        obj = TestPropertyCreatorInheritance()
+        assert obj.x == 0
+        assert obj._secret_list == ['get']
+
+        obj.x = 5
+        assert obj._secret_list == ['get', 'set']
+
+        assert obj.x == 0
+        assert obj._secret_list == ['get', 'set', 'get']
 
 
     def test_partially_defined():
@@ -129,3 +137,4 @@ if __name__ == '__main__':
 
 
     test_simple()
+    test_with_inheritance()
