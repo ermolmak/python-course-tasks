@@ -95,7 +95,25 @@ if __name__ == '__main__':
                 self._secret_list.append("set")
                 self._y = value
 
-        pass  # TODO
+        obj = TestPropertyCreator()
+        assert obj.x == 0
+
+        try:
+            obj.x = 5
+            assert False
+        except AttributeError:
+            pass
+        assert obj._secret_list == ['get']
+
+        try:
+            var = obj.y
+            assert False
+        except AttributeError:
+            pass
+
+        obj.y = 45
+        assert obj._secret_list == ['get', 'set']
+        assert obj._y == 45
 
 
     def test_sanity():
@@ -138,3 +156,4 @@ if __name__ == '__main__':
 
     test_simple()
     test_with_inheritance()
+    test_partially_defined()
