@@ -55,6 +55,8 @@ if __name__ == '__main__':
         del obj.x
         assert obj.x == 'No more'
 
+        print('test_simple passed!')
+
 
     def test_with_inheritance():
         class TestPropertyCreator(metaclass=PropertyCreator):
@@ -80,6 +82,8 @@ if __name__ == '__main__':
 
         assert obj.x == 0
         assert obj._secret_list == ['get', 'set', 'get']
+
+        print('test_with_inheritance passed!')
 
 
     def test_partially_defined():
@@ -115,6 +119,8 @@ if __name__ == '__main__':
         assert obj._secret_list == ['get', 'set']
         assert obj._y == 45
 
+        print('test_partially_defined passed!')
+
 
     def test_sanity():
         class TestPropertyCreator(metaclass=PropertyCreator):
@@ -145,6 +151,8 @@ if __name__ == '__main__':
         obj.text = '5'
         assert obj.text == 1
         assert obj._text == 5
+
+        print('test_sanity passed!')
 
 
     def test_multiple_usages():
@@ -183,6 +191,8 @@ if __name__ == '__main__':
         assert c.x == 10
         assert b.x == 1
         assert a.x == 0
+
+        print('test_multiple_usages passed!')
 
 
     test_simple()
