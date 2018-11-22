@@ -29,4 +29,70 @@ class InstanceCountExceptioner(type):
             raise InstanceCountException(
                 'Too many instances of {}'.format(cls.__name__))
         setattr(cls, _INSTANCE_COUNT, cnt + 1)
-        type.__call__(cls, *args, **kwargs)
+        return type.__call__(cls, *args, **kwargs)
+
+
+if __name__ == '__main__':
+    class TestInstanceCountExceptionerA(metaclass=InstanceCountExceptioner):
+        __max_instance_count__ = 2
+
+        def __init__(self):
+            self.a = 1
+
+        def get(self):
+            return self.a
+
+
+    class TestInstanceCountExceptionerB(metaclass=InstanceCountExceptioner):
+        __max_instance_count__ = 3
+
+        def __init__(self):
+            self.b = 2
+
+        def get(self):
+            return self.b
+
+
+    class TestInstanceCountExceptionerDefaultValue(
+        metaclass=InstanceCountExceptioner):
+        def __init__(self):
+            self.c = 3
+
+        def get(self):
+            return self.c
+
+
+    def test_simple():
+        a = TestInstanceCountExceptionerA()
+        b = TestInstanceCountExceptionerB()
+        c = TestInstanceCountExceptionerDefaultValue()
+
+        assert a.get() == 1
+        assert b.get() == 2
+        assert c.get() == 3
+
+        print('test_simple passed!')
+
+
+    def test_create():
+        pass
+
+
+    def test_fail_create_a():
+        pass
+        try:
+            pass
+        except InstanceCountException as e:
+            pass
+
+
+    def test_fail_create_b():
+        pass
+        try:
+            pass
+        except InstanceCountException as e:
+            pass
+
+
+    test_simple()
+
