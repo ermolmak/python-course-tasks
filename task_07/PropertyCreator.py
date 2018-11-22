@@ -163,10 +163,30 @@ if __name__ == '__main__':
             def get_x(self):
                 return self.value
 
-        pass  # TODO
+        a = TestPropertyCreatorA()
+        b = TestPropertyCreatorB()
+        c = TestPropertyCreatorC()
+
+        try:
+            a.x = 5
+            assert False
+        except AttributeError:
+            pass
+
+        try:
+            b.x = 7
+            assert False
+        except AttributeError:
+            pass
+
+        c.x = 9
+        assert c.x == 10
+        assert b.x == 1
+        assert a.x == 0
 
 
     test_simple()
     test_with_inheritance()
     test_partially_defined()
     test_sanity()
+    test_multiple_usages()
