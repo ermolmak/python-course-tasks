@@ -3,7 +3,7 @@ class InstanceCountException(Exception):
         self.msg = msg
 
     def __str__(self):
-        return f'InstanceCountException: {self.msg}'
+        return str(self.msg)
 
     def __repr__(self):
         return f'InstanceCountException({repr(self.msg)})'
@@ -24,8 +24,9 @@ class InstanceCountExceptioner(type):
         return type.__new__(mcs, name, bases, dict(**attrs, **new_attrs))
 
     def __call__(cls, *args, **kwargs):
-        if cls.__getattribute__(_INSTANCE_COUNT) >= \
-                cls.__getattribute__(_MAX_INSTANCE_COUNT):
+        cnt = getattr(cls, _INSTANCE_COUNT)
+        if cnt >= getattr(cls, _MAX_INSTANCE_COUNT):
             raise InstanceCountException(
-                f'Too many instances of {cls.__name__}')
+                'Too many instances of {}'.format(cls.__name__))
+        setattr(cls, _INSTANCE_COUNT, cnt + 1)
         type.__call__(cls, *args, **kwargs)
