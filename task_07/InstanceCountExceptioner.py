@@ -56,10 +56,10 @@ if __name__ == '__main__':
     class TestInstanceCountExceptionerDefaultValue(
         metaclass=InstanceCountExceptioner):
         def __init__(self):
-            self.c = 3
+            self.a = 3
 
         def get(self):
-            return self.c
+            return self.a
 
 
     def test_simple():
@@ -67,9 +67,9 @@ if __name__ == '__main__':
         b = TestInstanceCountExceptionerB()
         c = TestInstanceCountExceptionerDefaultValue()
 
-        assert a.get() == 1
-        assert b.get() == 2
-        assert c.get() == 3
+        assert a.get() == 1 == a.a
+        assert b.get() == 2 == b.b
+        assert c.get() == 3 == c.a
 
         print('test_simple passed!')
 
