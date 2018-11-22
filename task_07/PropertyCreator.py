@@ -132,7 +132,19 @@ if __name__ == '__main__':
                 except ValueError:
                     raise TypeError("unproper value for text: {}".format(value))
 
-        pass  # TODO
+        obj = TestPropertyCreator()
+        obj._boo = 'BOO!!!'
+        assert obj.raw_text == 'BOO!!!'
+
+        try:
+            obj.text = 'five'
+            assert False
+        except TypeError:
+            pass
+
+        obj.text = '5'
+        assert obj.text == 1
+        assert obj._text == 5
 
 
     def test_multiple_usages():
@@ -157,3 +169,4 @@ if __name__ == '__main__':
     test_simple()
     test_with_inheritance()
     test_partially_defined()
+    test_sanity()
