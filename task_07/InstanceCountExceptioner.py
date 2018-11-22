@@ -14,7 +14,7 @@ _INSTANCE_COUNT = '__instance_count__'
 
 
 class InstanceCountExceptioner(type):
-    _default__max_instance_count__ = 1  # singleton
+    _default__max_instance_count__ = 1
 
     def __new__(mcs, name, bases, attrs):
         new_attrs = {_INSTANCE_COUNT: 0}
@@ -75,24 +75,52 @@ if __name__ == '__main__':
 
 
     def test_create():
-        pass
+        a2 = TestInstanceCountExceptionerA()
+        b2 = TestInstanceCountExceptionerB()
+
+        b3 = TestInstanceCountExceptionerB()
+
+        b2.b = 20
+        b3.b = 200
+
+        assert b2.b == 20
+        assert b3.b == 200
+
+        print('test_create passed!')
 
 
     def test_fail_create_a():
-        pass
         try:
+            TestInstanceCountExceptionerA()
+            assert False
+        except InstanceCountException:
             pass
-        except InstanceCountException as e:
-            pass
+
+        print('test_fail_create_a passed!')
 
 
     def test_fail_create_b():
-        pass
         try:
+            TestInstanceCountExceptionerB()
+            assert False
+        except InstanceCountException:
             pass
-        except InstanceCountException as e:
+
+        print('test_fail_create_b passed!')
+
+
+    def test_fail_create_default_value():
+        try:
+            TestInstanceCountExceptionerDefaultValue()
+            assert False
+        except InstanceCountException:
             pass
+
+        print('test_fail_create_default_value passed!')
 
 
     test_simple()
-
+    test_create()
+    test_fail_create_a()
+    test_fail_create_b()
+    test_fail_create_default_value()
